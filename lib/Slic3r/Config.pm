@@ -15,8 +15,8 @@ our $Options = {
 
     # miscellaneous options
     'notes' => {
-        label   => 'Configuration notes',
-        tooltip => 'You can put here your personal notes. This text will be added to the G-code header comments.',
+        label   => 'Notes de Configuration',
+        tooltip => 'Vous pouvez mettre ici vos notes personnelles. Ce texte sera ajouté aux commentaires d\'en-tête du G-Code.',
         cli     => 'notes=s',
         type    => 's',
         multiline => 1,
@@ -27,9 +27,9 @@ our $Options = {
         default => '',
     },
     'threads' => {
-        label   => 'Threads',
-        tooltip => 'Threads are used to parallelize long-running tasks. Optimal threads number is slightly above the number of available cores/processors. Beware that more threads consume more memory.',
-        sidetext => '(more speed but more memory usage)',
+        label   => 'Processus',
+        tooltip => 'On peut utiliser plusieurs processus en parallèle pour les tâches les plus longuesà calculer. Le nombre optimal de processus est juste au dessus du nombre de coeurs/processeurs. Attention, plus de processus consomment plus de mémoire.',
+        sidetext => '(plus rapide mais consomme plus de mémoire)',
         cli     => 'threads|j=i',
         type    => 'i',
         min     => 1,
@@ -40,8 +40,8 @@ our $Options = {
 
     # output options
     'output_filename_format' => {
-        label   => 'Output filename format',
-        tooltip => 'You can use all configuration options as variables inside this template. For example: [layer_height], [fill_density] etc. You can also use [timestamp], [year], [month], [day], [hour], [minute], [second], [version], [input_filename], [input_filename_base].',
+        label   => 'Format du nom de fichier de sortie',
+        tooltip => 'Vous pouvez utiliser toutes les options de configuration comme des variables dans ce modèle.Par exemple : [layer_height], [fill_density] etc. Vous pouvez aussi utiliser [timestamp], [year], [month], [day], [hour], [minute], [second], [version], [input_filename], [input_filename_base].',
         cli     => 'output-filename-format=s',
         type    => 's',
         full_width => 1,
@@ -50,8 +50,8 @@ our $Options = {
 
     # printer options
     'print_center' => {
-        label   => 'Print center',
-        tooltip => 'Enter the G-code coordinates of the point you want to center your print around.',
+        label   => 'Centre d\'impression',
+        tooltip => 'Entrer les coordonnées G-code du point central d\'origine de l\'impression.',
         sidetext => 'mm',
         cli     => 'print-center=s',
         type    => 'point',
@@ -60,8 +60,8 @@ our $Options = {
         default => [100,100],
     },
     'gcode_flavor' => {
-        label   => 'G-code flavor',
-        tooltip => 'Some G/M-code commands, including temperature control and others, are not universal. Set this option to your printer\'s firmware to get a compatible output. The "No extrusion" flavor prevents Slic3r from exporting any extrusion value at all.',
+        label   => 'Parfum de G-code',
+        tooltip => 'Certaines commandes G/M-code ne sont pas universelles, comme le controlle de la température ou autre. Réglez cette option sur le firmware de votre imprimante pour avoir une sortie compatible. Le parfum "No extrusion" empêche Slic3r d\'exporter les valeurs d\'extrusion.',
         cli     => 'gcode-flavor=s',
         type    => 'select',
         values  => [qw(reprap teacup makerbot mach3 no-extrusion)],
@@ -69,44 +69,44 @@ our $Options = {
         default => 'reprap',
     },
     'use_relative_e_distances' => {
-        label   => 'Use relative E distances',
-        tooltip => 'If your firmware requires relative E values, check this, otherwise leave it unchecked. Most firmwares use absolute values.',
+        label   => 'Utiliser des E distances relatives',
+        tooltip => 'Cochez ceci si votre firmware requiert des valeurs d\'extrusion relatives, sinon laissez ça décoché. La pluspart des firmwares utilisent des valuers absolues.',
         cli     => 'use-relative-e-distances!',
         type    => 'bool',
         default => 0,
     },
     'extrusion_axis' => {
-        label   => 'Extrusion axis',
-        tooltip => 'Use this option to set the axis letter associated to your printer\'s extruder (usually E but some printers use A).',
+        label   => 'Axe d\'extrusion',
+        tooltip => 'Utilisez cette option pour définir la lettre associées à l\'axe d\'extrusion de votre imprimante (habitellement E, mais certaines machines utilisent A).',
         cli     => 'extrusion-axis=s',
         type    => 's',
         default => 'E',
     },
     'z_offset' => {
-        label   => 'Z offset',
-        tooltip => 'This value will be added (or subtracted) from all the Z coordinates in the output G-code. It is used to compensate for bad Z endstop position: for example, if your endstop zero actually leaves the nozzle 0.3mm far from the print bed, set this to -0.3 (or fix your endstop).',
+        label   => 'offset Z',
+        tooltip => 'Cette valeur sera ajoutée (ou soustraite) de toutes les coordonnées Z dans le G-code sorti. Il est utilisé pour compenser une mauvaise position du capteur de fin de course Z : par exemple, si votre fin de course laisse actuellement la buse à 0.3mm au dessus du plateau d\'impression, réglez ceci à-0.3 (pour corriger l\'erreur du fin de course).',
         sidetext => 'mm',
         cli     => 'z-offset=f',
         type    => 'f',
         default => 0,
     },
     'gcode_arcs' => {
-        label   => 'Use native G-code arcs',
-        tooltip => 'This experimental feature tries to detect arcs from segments and generates G2/G3 arc commands instead of multiple straight G1 commands.',
+        label   => 'Utiliser les arcs en G-code natif',
+        tooltip => 'Cette fonction expérimentale essaye de détecter les arcs parmi les segments et génère des commandes d\'arc G2/G3 à la place de séries de petites commandes G1.',
         cli     => 'gcode-arcs!',
         type    => 'bool',
         default => 0,
     },
     'g0' => {
-        label   => 'Use G0 for travel moves',
-        tooltip => 'Only enable this if your firmware supports G0 properly (thus decouples all axes using their maximum speeds instead of synchronizing them). Travel moves and retractions will be combined in single commands, speeding them print up.',
+        label   => 'Utiliser G0 pour les mouvements à vide',
+        tooltip => 'Activez cette option seulement si le firmware supporte le code G0 correctement (cela découple tous les axes en utilisant leur vitesses maximum au lieu de les synchroniser). Mouvement à vide et retraction seront combinés en une unique commande, accélérant ainsi l\'impression.',
         cli     => 'g0!',
         type    => 'bool',
         default => 0,
     },
     'gcode_comments' => {
-        label   => 'Verbose G-code',
-        tooltip => 'Enable this to get a commented G-code file, with each line explained by a descriptive text. If you print from SD card, the additional weight of the file could make your firmware slow down.',
+        label   => 'G-code bavard',
+        tooltip => 'Activez ceci pour avoir un fichier G-code commenté, avec chaque ligne expliquée par un texte descriptif. Si vous imprimez depuis une carte SD, l\'augmentation de la taille du fichier peut ralentir significativement le firmware.',
         cli     => 'gcode-comments!',
         type    => 'bool',
         default => 0,
@@ -114,8 +114,8 @@ our $Options = {
     
     # extruders options
     'extruder_offset' => {
-        label   => 'Extruder offset',
-        tooltip => 'If your firmware doesn\'t handle the extruder displacement you need the G-code to take it into account. This option lets you specify the displacement of each extruder with respect to the first one. It expects positive coordinates (they will be subtracted from the XY coordinate).',
+        label   => 'Décalage d\'extrudeur',
+        tooltip => 'Si votre firmware ne gère pas le décalage d\'extrudeur, vous devez faire que le G-code prenne cela en compte. Cette option vous laisse spécifier le décalage de chaque extrudeur par rapport au premier. I attend des coordonnées positives (elles seront soustraites aux coordonnées XY.',
         sidetext => 'mm',
         cli     => 'extruder-offset=s@',
         type    => 'point',
@@ -124,8 +124,8 @@ our $Options = {
         default => [[0,0]],
     },
     'nozzle_diameter' => {
-        label   => 'Nozzle diameter',
-        tooltip => 'This is the diameter of your extruder nozzle (for example: 0.5, 0.35 etc.)',
+        label   => 'Diamètre de la buse',
+        tooltip => 'C\'est le diamètre de la buse de l\'extrudeur (par exemple: 0.5, 0.35 etc.)',
         cli     => 'nozzle-diameter=f@',
         type    => 'f',
         sidetext => 'mm',
@@ -134,8 +134,8 @@ our $Options = {
         default => [0.5],
     },
     'filament_diameter' => {
-        label   => 'Diameter',
-        tooltip => 'Enter your filament diameter here. Good precision is required, so use a caliper and do multiple measurements along the filament, then compute the average.',
+        label   => 'Diamètre',
+        tooltip => 'Entrez ici le diamètre de votre filament. Une bonne précision est requise, utilisez un pied à coulisse et réalisez de multiples mesures sur la longueur du filament, puis calculez la moyenne.',
         sidetext => 'mm',
         cli     => 'filament-diameter=f@',
         type    => 'f',
@@ -144,8 +144,8 @@ our $Options = {
         default     => [3],
     },
     'extrusion_multiplier' => {
-        label   => 'Extrusion multiplier',
-        tooltip => 'This factor changes the amount of flow proportionally. You may need to tweak this setting to get nice surface finish and correct single wall widths. Usual values are between 0.9 and 1.1. If you think you need to change this more, check filament diameter and your firmware E steps.',
+        label   => 'Multiplieur d\'extrusion',
+        tooltip => 'Ce facteur modifie le débit proportionnellement. Vous pouvez avoir besoin de régler ce paramètre pour avoir un beau fini de surface et une largeur correcte des parois uniques. Habituellement, les valuers jouent de 0.9 à 1.1. Si vous pensez avoir besoin de changer cela de beaucoup plus, vérifiez le diamètre de votre filament et les pas d\'extrusion dans votre firmware (E steps/mm).',
         cli     => 'extrusion-multiplier=f@',
         type    => 'f',
         serialize   => $serialize_comma,
@@ -153,8 +153,8 @@ our $Options = {
         default => [1],
     },
     'temperature' => {
-        label   => 'Other layers',
-        tooltip => 'Extruder temperature for layers after the first one. Set this to zero to disable temperature control commands in the output.',
+        label   => 'Autres calques',
+        tooltip => 'Température de l\'extrudeur pour les calques suivants le premier. Réglez à zéro pour désactiver le contrôle de température dans la sortie.',
         sidetext => '°C',
         cli     => 'temperature=i@',
         type    => 'i',
@@ -164,8 +164,8 @@ our $Options = {
         default => [200],
     },
     'first_layer_temperature' => {
-        label   => 'First layer',
-        tooltip => 'Extruder temperature for first layer. If you want to control temperature manually during print, set this to zero to disable temperature control commands in the output file.',
+        label   => 'Premier calque',
+        tooltip => 'Température de l\'extrudeur pour le premier calque. Si vous voulez contrôler la température manuellement durant l\'impression, réglez ce paramètre à zéro pour désactiver le contrôle de température dans la sortie.',
         sidetext => '°C',
         cli     => 'first-layer-temperature=i@',
         type    => 'i',
@@ -177,23 +177,23 @@ our $Options = {
     
     # extruder mapping
     'perimeter_extruder' => {
-        label   => 'Perimeter extruder',
-        tooltip => 'The extruder to use when printing perimeters.',
+        label   => 'Extrudeur pour le Perimètre',
+        tooltip => 'Extrudeur à utiliser pour imprimer les périmètres.',
         cli     => 'perimeter-extruder=i',
         type    => 'i',
         aliases => [qw(perimeters_extruder)],
         default => 1,
     },
     'infill_extruder' => {
-        label   => 'Infill extruder',
-        tooltip => 'The extruder to use when printing infill.',
+        label   => 'Extrudeur de remplissage',
+        tooltip => 'Extrudeur à utiliser pour le remplissage.',
         cli     => 'infill-extruder=i',
         type    => 'i',
         default => 1,
     },
     'support_material_extruder' => {
         label   => 'Support material extruder',
-        tooltip => 'The extruder to use when printing support material. This affects brim too.',
+        tooltip => 'Extrudeur à utiliser pour le support matériel. Utilisé aussi pour la frontière.',
         cli     => 'support-material-extruder=i',
         type    => 'i',
         default => 1,
@@ -201,8 +201,8 @@ our $Options = {
     
     # filament options
     'first_layer_bed_temperature' => {
-        label   => 'First layer',
-        tooltip => 'Heated build plate temperature for the first layer. Set this to zero to disable bed temperature control commands in the output.',
+        label   => 'Premier calque',
+        tooltip => 'Température de la platine chauffante pour le premier calque. Réglez ce paramètre à zéro pour désactiver le contrôle de température de la platine dans les commandes de sortie.',
         sidetext => '°C',
         cli     => 'first-layer-bed-temperature=i',
         type    => 'i',
